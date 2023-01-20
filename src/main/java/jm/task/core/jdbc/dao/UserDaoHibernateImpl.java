@@ -2,7 +2,6 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
@@ -19,7 +18,12 @@ public class UserDaoHibernateImpl implements UserDao {
         try (var session = sessionFactory.openSession()) {
 
             String sql = """
-
+            CREATE TABLE IF NOT EXISTS users_table(
+                id SERIAL PRIMARY KEY, 
+                name VARCHAR(128) NOT NULL, 
+                last_name VARCHAR(128) NOT NULL,
+                age SMALLINT   
+            );  
             """;
 
             session.beginTransaction();
@@ -63,7 +67,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (var session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            session.createQuery("DELETE User WHERE id = " + id);
+            session.createQuery("DELETE User WHERE id = " + id).executeUpdate();
 
             transaction.commit();
         } catch (Exception e) {
@@ -90,7 +94,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (var session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            session.createQuery("DELETE FROM User");
+            session.createQuery("DELETE FROM User").executeUpdate();
 
             transaction.commit();
         } catch (Exception e) {
@@ -98,5 +102,8 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.rollback();
             e.printStackTrace();
         }
+    }
+    public void closeSessionFactory() {
+        Util.closeSessionFactory();
     }
 }

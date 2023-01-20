@@ -1,28 +1,26 @@
 package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.Util;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import jm.task.core.jdbc.service.UserServiceImpl;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        User user = new User("Biba", "B", (byte) 11);
+        UserServiceImpl userServiceImpl = new UserServiceImpl();
 
+        userServiceImpl.createUsersTable();
 
+        userServiceImpl.saveUser("Aboba", "Test", (byte) 12);
+        userServiceImpl.saveUser("Biba", "Test", (byte) 12);
+        userServiceImpl.saveUser("Boba", "Test", (byte) 12);
 
+        List<User> userList = userServiceImpl.getAllUsers();
+        System.out.println(userList);
 
+        userServiceImpl.removeUserById(1);
 
+        userServiceImpl.cleanUsersTable();
 
-//        try (var sessionFactory = Util.getSessionFactory();
-//             var session = sessionFactory.openSession()) {
-//
-//            session.beginTransaction();
-//            session.save(user);
-//
-//            System.out.println("OK");
-//        }
-        
     }
 }
