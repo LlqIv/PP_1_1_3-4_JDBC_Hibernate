@@ -32,4 +32,9 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
 
     }
+
+    @Override
+    public void closeSessionFactory() {
+
+    }
 }
