@@ -1,7 +1,6 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
-import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserServiceImpl;
 
 
 public class Main {
@@ -12,7 +11,7 @@ public class Main {
 //        User user3 = new User("Boba", "Test3", (byte) 10);
 
 
-        var userDaoJDBC = new UserDaoJDBCImpl();
+        var userDaoJDBC = new UserServiceImpl();
 
         userDaoJDBC.createUsersTable();
 
